@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using VendasWebCore.Models;
+using VendasWebCore.Models.ViewModels;
 
 namespace VendasWebCore.Controllers
 {
@@ -15,6 +15,7 @@ namespace VendasWebCore.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Titulo"] = "Bem vindo!";
             return View();
         }
 
