@@ -2,8 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using VendasWebCore.Data;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("VendasWebCoreContext");
 builder.Services.AddDbContext<VendasWebCoreContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("VendasWebCoreContext") ?? throw new InvalidOperationException("Connection string 'VendasWebCoreContext' not found.")));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
