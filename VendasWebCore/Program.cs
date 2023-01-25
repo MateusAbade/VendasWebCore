@@ -3,12 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VendasWebCore.Data;
+using VendasWebCore.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("VendasWebCoreContext");
 builder.Services.AddDbContext<VendasWebCoreContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<SeedingService>();
+builder.Services.AddScoped<ServiceVendedor>();
 
 
 // Add services to the container.

@@ -6,7 +6,6 @@ namespace VendasWebCore.Data
     public class SeedingService
     {
 
-
         public static void Seed(VendasWebCoreContext context)
         {
             if(context.Departamento.Any() || context.Vendas.Any() || context.Vendedor.Any() ) 
