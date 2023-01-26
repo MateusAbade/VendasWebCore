@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VendasWebCore.Models;
+using VendasWebCore.Models.ViewModels;
 using VendasWebCore.Services;
 
 namespace VendasWebCore.Controllers
@@ -7,10 +8,12 @@ namespace VendasWebCore.Controllers
     public class VendedoresController : Controller
     {
         private ServiceVendedor _serviceVendedor;
+        private ServiceDepartamento _serviceDepartamento;
 
-        public VendedoresController(ServiceVendedor serviceVendedor)
+        public VendedoresController(ServiceVendedor serviceVendedor, ServiceDepartamento serviceDepartamento)
         {
             _serviceVendedor = serviceVendedor;
+            _serviceDepartamento = serviceDepartamento;
         }
 
         public IActionResult Index()
@@ -21,7 +24,9 @@ namespace VendasWebCore.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departamentos = _serviceDepartamento.FindAll();
+            var viewModel = new FormVendedorViewModel { Departamentos = departamentos };
+            return View(viewModel);
         }
 
         [HttpPost]

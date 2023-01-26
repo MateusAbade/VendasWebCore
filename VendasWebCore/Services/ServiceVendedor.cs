@@ -19,7 +19,6 @@ namespace VendasWebCore.Services
 
         public void Insert(Vendedor vendedor)
         {
-            vendedor.Dep = _context.Departamento.First();
             _context.Add(vendedor);
             _context.SaveChanges();
         }
