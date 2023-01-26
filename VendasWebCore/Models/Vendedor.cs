@@ -2,6 +2,7 @@
 {
     public class Vendedor
     {
+
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
@@ -9,6 +10,9 @@
         public DateTime DataNascimento { get; set;}
 
         public Departamento Dep { get; set; }
+
+        public int DepartamentoId { get; set; }
+
         public ICollection<Vendas> Venda { get; set; } = new List<Vendas>();
 
         public Vendedor()

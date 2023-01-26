@@ -17,5 +17,6 @@ namespace VendasWebCore.Data
         public DbSet<Departamento> Departamento { get; set; } = default!;
         public DbSet<Vendedor> Vendedor { get; set; } = default!;
         public DbSet<Vendas> Vendas { get; set; } = default!;
+
     }
 }

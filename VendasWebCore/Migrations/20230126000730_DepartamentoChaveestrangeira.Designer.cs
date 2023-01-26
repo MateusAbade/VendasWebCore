@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VendasWebCore.Data;
 
@@ -10,9 +11,11 @@ using VendasWebCore.Data;
 namespace VendasWebCore.Migrations
 {
     [DbContext(typeof(VendasWebCoreContext))]
-    partial class VendasWebCoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230126000730_DepartamentoChaveestrangeira")]
+    partial class DepartamentoChaveestrangeira
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
