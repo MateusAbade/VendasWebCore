@@ -1,4 +1,5 @@
-﻿using VendasWebCore.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using VendasWebCore.Data;
 using VendasWebCore.Models;
 
 namespace VendasWebCore.Services
@@ -25,7 +26,7 @@ namespace VendasWebCore.Services
 
         public Vendedor FindById(int id)
         {
-            return _context.Vendedor.FirstOrDefault(obj => obj.Id == id);
+            return _context.Vendedor.Include(obj => obj.Dep).FirstOrDefault(obj => obj.Id == id);
         }
 
         public void Remove(int id)
