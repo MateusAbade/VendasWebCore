@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using VendasWebCore.Models;
 using VendasWebCore.Models.ViewModels;
 using VendasWebCore.Services;
+using VendasWebCore.Services.Exception;
 
 namespace VendasWebCore.Controllers
 {
@@ -75,5 +77,50 @@ namespace VendasWebCore.Controllers
             return View(obj);
 
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _serviceVendedor.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            List<Departamento> departamentos = _serviceDepartamento.FindAll();
+
+            FormVendedorViewModel viewModel = new FormVendedorViewModel { Vendedor = obj, Departamentos = departamentos };
+            return View(viewModel);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Vendedor vendedor)
+        {
+            if( id != vendedor.Id)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _serviceVendedor.Update(vendedor);
+                return RedirectToAction(nameof(Index));
+
+            }catch(NotFoundException)
+            {
+                return NotFound();
+            }catch(DBConcurrencyException)
+            {
+                return BadRequest();
+            }
+
+
+        }
+
     }
 }
