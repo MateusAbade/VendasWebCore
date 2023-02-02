@@ -1,12 +1,23 @@
-﻿namespace VendasWebCore.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VendasWebCore.Models
 {
     public class Vendedor
     {
 
         public int Id { get; set; }
         public string Nome { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Display(Name = "Salario base")]
+        [DisplayFormat(DataFormatString ="{0:F2}")]
         public double SalarioBase { get; set; }
+
+        [Display(Name = "Data de nascimento")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime DataNascimento { get; set;}
 
         public Departamento Dep { get; set; }

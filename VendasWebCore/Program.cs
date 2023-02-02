@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Globalization;
 using VendasWebCore.Data;
 using VendasWebCore.Services;
 
@@ -20,6 +22,16 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 Configure(app);
+
+var enUS =  new CultureInfo("en-US");
+var opcoesLocalizacao = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(enUS),
+    SupportedCultures = new List<CultureInfo> { enUS },
+    SupportedUICultures = new List<CultureInfo> { enUS },
+};
+
+app.UseRequestLocalization(opcoesLocalizacao);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
