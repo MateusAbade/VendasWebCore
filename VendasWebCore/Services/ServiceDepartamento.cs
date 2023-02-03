@@ -1,4 +1,5 @@
-﻿using VendasWebCore.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using VendasWebCore.Data;
 using VendasWebCore.Models;
 
 namespace VendasWebCore.Services
@@ -12,9 +13,9 @@ namespace VendasWebCore.Services
             _context = context;
         }
 
-        public List<Departamento> FindAll()
+        public async Task<List<Departamento>> FindAllAsync()
         {
-            return _context.Departamento.OrderBy(x => x.Nome).ToList();
+            return await _context.Departamento.OrderBy(x => x.Nome).ToListAsync();
         }
     }
 }

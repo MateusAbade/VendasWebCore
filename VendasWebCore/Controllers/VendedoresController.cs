@@ -19,35 +19,41 @@ namespace VendasWebCore.Controllers
             _serviceDepartamento = serviceDepartamento;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _serviceVendedor.FindAll();
+            var list = await _serviceVendedor.FindAllAsync();
             return View(list);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var departamentos = _serviceDepartamento.FindAll();
+            var departamentos = await _serviceDepartamento.FindAllAsync();
             var viewModel = new FormVendedorViewModel { Departamentos = departamentos };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Vendedor vendedor)
+        public async Task<IActionResult> Create(Vendedor vendedor)
         {
-            _serviceVendedor.Insert(vendedor);
+            if (!ModelState.IsValid)
+            {
+                var departamentos = await _serviceDepartamento.FindAllAsync();
+                var viewModel = new FormVendedorViewModel { Vendedor=vendedor, Departamentos = departamentos };
+                return View(viewModel);
+            }
+            await _serviceVendedor.InsertAsync(vendedor);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if(id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não forncecido"});
             }
 
-            var obj = _serviceVendedor.FindById(id.Value);
+            var obj = await _serviceVendedor.FindByIdAsync(id.Value);
             if(obj == null) { 
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado!"});
             }
@@ -56,21 +62,21 @@ namespace VendasWebCore.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _serviceVendedor.Remove(id);
+            await _serviceVendedor.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
 
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido"});
             }
 
-            var obj = _serviceVendedor.FindById(id.Value);
+            var obj = await _serviceVendedor.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado"});
@@ -79,20 +85,20 @@ namespace VendasWebCore.Controllers
 
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não fornecido"});
             }
 
-            var obj = _serviceVendedor.FindById(id.Value);
+            var obj = await _serviceVendedor.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id não encontrado"});
             }
 
-            List<Departamento> departamentos = _serviceDepartamento.FindAll();
+            List<Departamento> departamentos = await _serviceDepartamento.FindAllAsync();
 
             FormVendedorViewModel viewModel = new FormVendedorViewModel { Vendedor = obj, Departamentos = departamentos };
             return View(viewModel);
@@ -101,7 +107,7 @@ namespace VendasWebCore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Vendedor vendedor)
+        public async Task<IActionResult> Edit(int id, Vendedor vendedor)
         {
             if( id != vendedor.Id)
             {
@@ -109,7 +115,7 @@ namespace VendasWebCore.Controllers
             }
             try
             {
-                _serviceVendedor.Update(vendedor);
+                await _serviceVendedor.UpdateAsync(vendedor);
                 return RedirectToAction(nameof(Index));
 
             }catch(NotFoundException e)
