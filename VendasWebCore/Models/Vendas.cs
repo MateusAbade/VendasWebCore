@@ -1,9 +1,11 @@
-﻿using VendasWebCore.Models.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using VendasWebCore.Models.Enums;
 namespace VendasWebCore.Models
 {
     public class Vendas
     {
         public int Id { get; set; }
+
         public DateTime Data { get; set; }
         public double Montante { get; set; }
 

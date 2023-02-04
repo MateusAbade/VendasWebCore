@@ -36,12 +36,7 @@ namespace VendasWebCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Vendedor vendedor)
         {
-            if (!ModelState.IsValid)
-            {
-                var departamentos = await _serviceDepartamento.FindAllAsync();
-                var viewModel = new FormVendedorViewModel { Vendedor=vendedor, Departamentos = departamentos };
-                return View(viewModel);
-            }
+
             await _serviceVendedor.InsertAsync(vendedor);
             return RedirectToAction(nameof(Index));
         }

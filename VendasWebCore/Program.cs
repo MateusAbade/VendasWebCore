@@ -15,6 +15,7 @@ builder.Services.AddDbContext<VendasWebCoreContext>(options =>
 builder.Services.AddScoped<SeedingService>();
 builder.Services.AddScoped<ServiceVendedor>();
 builder.Services.AddScoped<ServiceDepartamento>();
+builder.Services.AddScoped<ServiceVendas>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

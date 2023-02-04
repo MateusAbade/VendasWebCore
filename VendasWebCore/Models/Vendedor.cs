@@ -22,7 +22,7 @@ namespace VendasWebCore.Models
 
         public Departamento Dep { get; set; }
 
-        public int DepartamentoId { get; set; }
+        public int DepId { get; set; }
 
         public ICollection<Vendas> Venda { get; set; } = new List<Vendas>();
 
