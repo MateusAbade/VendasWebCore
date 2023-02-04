@@ -15,7 +15,6 @@ namespace VendasWebCore.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Titulo"] = "Bem vindo!";
             return View();
         }
 
