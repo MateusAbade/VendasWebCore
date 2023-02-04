@@ -49,6 +49,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Montante)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
 
                 </tr>
             </thead>
@@ -70,6 +73,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Montante)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
                         </td>
                     </tr>
                 }

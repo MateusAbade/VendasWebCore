@@ -27,6 +27,25 @@ namespace VendasWebCore.Services
 
             return await result.Include(x => x.vendedores).Include(x => x.vendedores.Dep).OrderByDescending(x => x.Data).ToListAsync();
         }
+        public async Task<List<IGrouping<Departamento, Vendas>>> FindByDateGrupoAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = from obj in _context.Vendas select obj;
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Data >= minDate.Value);
+            }
 
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Data <= maxDate.Value);
+            }
+
+            return await result
+                .Include(x => x.vendedores)
+                .Include(x => x.vendedores.Dep)
+                .OrderByDescending(x => x.Data)
+                .GroupBy(x => x.vendedores.Dep)
+                .ToListAsync();
+        }
     }
 }
